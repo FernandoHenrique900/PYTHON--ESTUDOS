@@ -1,0 +1,107 @@
+EXPLICACAO PASSO A PASSO - calculadora.py
+
+Este programa e uma calculadora no terminal. Ele pede uma operacao e dois
+numeros reais, mostra o resultado e repete ate o usuario digitar "sair".
+
+
+1. Visao geral
+
+O arquivo tem tres funcoes e um laco principal:
+
+- formatar_numero: prepara o numero para exibicao.
+- ler_numero: le um numero digitado pelo usuario.
+- calcular: faz soma, subtracao, multiplicacao ou divisao.
+- while True: repete o uso da calculadora.
+
+
+2. formatar_numero (linhas 4 a 11)
+
+Recebe um valor e devolve um texto pronto para mostrar na tela.
+
+Passo 1. Converte o valor para float e arredonda para no maximo 2 casas
+decimais com round(float(valor), 2).
+
+Passo 2. Se o numero arredondado for inteiro (is_integer), converte para
+int e devolve so o numero, sem virgula.
+Exemplo: 5.0 vira "5".
+
+Passo 3. Se o numero for quebrado, formata com 2 casas (f"{valor:.2f}"),
+remove zeros a direita com rstrip("0") e o ponto final que sobrar com
+rstrip("."). Depois troca o ponto pela virgula.
+Exemplos: 2.50 vira "2,5" e 0.333 vira "0,33".
+
+
+3. ler_numero (linhas 14 a 20)
+
+Pede um numero e so retorna quando a entrada for valida.
+
+Passo 1. Mostra a mensagem e le o texto com input.
+Passo 2. strip() tira espacos nas pontas. replace(",", ".") aceita
+virgula, como em "2,5", e transforma em "2.5" para o Python entender.
+Passo 3. float(texto) converte o texto em numero real.
+Passo 4. Se a conversao falhar (ValueError), mostra "Numero invalido"
+e o while True pede o numero de novo.
+Passo 5. Se der certo, return devolve o float e encerra a funcao.
+
+
+4. calcular (linhas 23 a 34)
+
+Recebe o nome da operacao e os dois numeros e devolve o resultado.
+
+- "soma": num1 + num2
+- "subtracao": num1 - num2
+- "multiplicacao": num1 * num2
+- "divisao": se num2 for 0, devolve None. Divisao por zero nao existe,
+  entao a conta nao e feita. Se num2 nao for 0, devolve num1 / num2.
+- Qualquer outro nome de operacao tambem devolve None. No fluxo normal
+  isso nao acontece, porque o laco principal ja filtra a operacao antes.
+
+
+5. Laco principal (linhas 37 a 59)
+
+while True deixa o programa rodando ate um break.
+
+Passo 1. Pergunta a operacao. strip() tira espacos e lower() aceita
+maiusculas ou minusculas, por exemplo "Soma" vira "soma".
+
+Passo 2. Se o usuario digitar "sair", break encerra o laco.
+
+Passo 3. Se a operacao nao for soma, subtracao, multiplicacao ou divisao,
+mostra "Operacao invalida" e continue volta ao inicio do laco, sem pedir
+os numeros.
+
+Passo 4. Chama ler_numero duas vezes e guarda os valores em num1 e num2.
+
+Passo 5. Chama calcular. Se o retorno for None, a divisao foi por zero.
+Mostra "Aviso: divisao por zero nao existe." e continue volta a pedir
+outra operacao. O programa nao fecha.
+
+Passo 6. Se houver resultado, formatar_numero e usada nos dois numeros
+e no resultado. O print mostra a frase com a operacao e os valores.
+
+
+6. Encerramento (linha 61)
+
+Depois do break, o programa sai do while e mostra:
+"Obrigado por usar a calculadora!"
+
+
+7. Exemplos
+
+soma de 2 e 3
+  resultado: 5
+
+divisao de 5 por 2
+  resultado: 2,5
+
+divisao de 1 por 3
+  resultado: 0,33
+
+divisao de 10 por 0
+  aviso: divisao por zero nao existe.
+
+operacao "xyz"
+  aviso: Operacao invalida
+
+entrada "abc" no lugar de um numero
+  aviso: Numero invalido, e o programa pede o numero de novo.
